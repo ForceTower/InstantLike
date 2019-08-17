@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="@dimen/spacing_big"
+        android:paddingEnd="@dimen/spacing_big"
+        android:paddingTop="@dimen/spacing_big"
+        android:paddingBottom="@dimen/spacing_big">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/logotype_likes_view_colored"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_big"
+            android:text="@string/add_first_profile_title"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textFontWeight="600"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@string/add_first_profile_description"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textFontWeight="500"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_big"
+            android:text="@string/instagram_username_label_indicator"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            style="@style/LikesView.FirstProfile.TextInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textCursorDrawable="@null"
+                android:textFontWeight="600"
+                android:textSize="14sp"
+                android:hint="@string/instagram_username_hint"
+                android:textColorHint="#B1FFFFFF"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/add_first_profile_text"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorAccent"
+            android:letterSpacing="0"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@android:color/white"/>
+
+    </LinearLayout>
+</layout>

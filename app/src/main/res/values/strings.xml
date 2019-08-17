@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LikesView</string>
+    <string name="onboarding_title">Descubra o número de curtidas em qualquer perfil do Insta</string>
+    <string name="onboarding_complete">Começar</string>
+    <string name="add_first_profile_text">Visualizar curtidas</string>
+    <string name="add_first_profile_title">Vamos começar?</string>
+    <string name="add_first_profile_description">Basta digitar o nome de usuário abaixo para conferir a quantidade de curtidas em todas as postagem daquele perfil.</string>
+    <string name="instagram_username_label_indicator">Usuário do Instagram</string>
+    <string name="instagram_username_hint">Digite o nome de usuário</string>
+</resources>
