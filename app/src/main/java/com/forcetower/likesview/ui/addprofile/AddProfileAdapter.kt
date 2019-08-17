@@ -1,4 +1,4 @@
-package com.forcetower.likesview.ui.profile
+package com.forcetower.likesview.ui.addprofile
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

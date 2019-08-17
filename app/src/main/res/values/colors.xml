@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#439AFF</color>
     <color name="colorPrimaryDark">#3F51B5</color>
     <color name="colorAccent">#EE2A8C</color>
+    <color name="selectedProfileColor">#439AFF</color>
+    <color name="divider">#EAEAEA</color>
+    <color name="textSecondary">#262626</color>
+    <color name="card_stroke_profile">#DCDCDC</color>
 </resources>

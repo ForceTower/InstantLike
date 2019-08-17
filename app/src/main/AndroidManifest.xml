@@ -16,13 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LikesView">
+
         <activity
-            android:name=".ui.MainActivity"
-            android:theme="@style/LikesView.Onboarding">
+            android:name=".ui.LauncherActivity"
+            android:theme="@style/LikesView.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:theme="@style/LikesView.Onboarding">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:theme="@style/LikesView.Profile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
     </application>

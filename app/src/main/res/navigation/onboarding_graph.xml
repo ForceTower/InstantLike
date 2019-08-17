@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph.xml"
+    android:id="@+id/onboarding_graph"
     app:startDestination="@id/onboarding">
 
     <fragment
@@ -16,7 +16,14 @@
     </fragment>
     <fragment
         android:id="@+id/first_profile"
-        android:name="com.forcetower.likesview.ui.profile.AddProfileFragment"
+        android:name="com.forcetower.likesview.ui.addprofile.AddProfileFragment"
         android:label="AddProfileFragment"
-        tools:layout="@layout/fragment_add_first_profile"/>
+        tools:layout="@layout/fragment_add_first_profile">
+    </fragment>
+    <action
+        android:id="@+id/action_global_first_profile"
+        app:destination="@id/first_profile"
+        app:popUpTo="@id/first_profile"
+        app:popUpToInclusive="true"
+        app:launchSingleTop="true" />
 </navigation>

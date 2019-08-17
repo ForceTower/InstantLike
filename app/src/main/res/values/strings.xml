@@ -8,4 +8,11 @@
     <string name="instagram_username_label_indicator">Usuário do Instagram</string>
     <string name="instagram_username_hint">Digite o nome de usuário</string>
     <string name="instagram_username_pattern">\@%1$s</string>
+    <string name="instagram_verified_profile">Perfil Verificado</string>
+    <string name="likes_amount_description">Número de Curtidas</string>
+    <string name="media_gallery_description">Galeria de Fotos</string>
+    <string name="followers">Seguidores</string>
+    <string name="following">Seguindo</string>
+    <string name="instagram_post_amount">Total de postagens</string>
+    <string name="instagram_mean_like">Média de curtidas</string>
 </resources>

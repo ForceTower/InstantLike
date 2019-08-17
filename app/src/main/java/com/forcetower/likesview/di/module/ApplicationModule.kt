@@ -3,8 +3,10 @@ package com.forcetower.likesview.di.module
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import androidx.room.Room
 import com.forcetower.likesview.BuildConfig
 import com.forcetower.likesview.LikesViewApp
+import com.forcetower.likesview.core.database.LikeDatabase
 import com.forcetower.likesview.core.service.InstagramAPI
 import dagger.Module
 import dagger.Provides
@@ -28,6 +30,15 @@ class ApplicationModule {
     @Singleton
     fun providePreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikeDatabase(context: Context): LikeDatabase {
+        return Room.databaseBuilder(context, LikeDatabase::class.java, "likes.db")
+            .enableMultiInstanceInvalidation()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

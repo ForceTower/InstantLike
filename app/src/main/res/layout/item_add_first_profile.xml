@@ -8,7 +8,7 @@
             type="com.forcetower.likesview.core.model.InstagramUserSearch" />
         <variable
             name="actions"
-            type="com.forcetower.likesview.ui.profile.ProfileActions" />
+            type="com.forcetower.likesview.ui.addprofile.ProfileActions" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

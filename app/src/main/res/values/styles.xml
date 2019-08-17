@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="LikesView" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -9,9 +9,26 @@
         <item name="android:fontFamily">@font/product_sans</item>
     </style>
 
+    <style name="LikesView.Launcher">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="LikesView.Onboarding">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowBackground">@drawable/instagram_gradient</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="LikesView.Profile">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentNavigation">true</item>

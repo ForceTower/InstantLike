@@ -1,4 +1,4 @@
-package com.forcetower.likesview.ui.profile
+package com.forcetower.likesview.ui.addprofile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.forcetower.likesview.core.EventObserver
 import com.forcetower.likesview.core.extensions.closeKeyboard
 import com.forcetower.likesview.core.vm.ViewModelFactory
@@ -22,7 +23,7 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
     lateinit var factory: ViewModelFactory
     private var keyboardUnregister: Unregistrar? = null
     private lateinit var binding: FragmentAddFirstProfileBinding
-    private val viewModel: ProfileViewModel by viewModels(factoryProducer = { factory })
+    private val viewModel: AddProfileViewModel by viewModels { factory }
     private lateinit var adapter: AddProfileAdapter
 
     override fun onCreateView(
@@ -35,6 +36,10 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
         return FragmentAddFirstProfileBinding.inflate(inflater, container, false).also {
             binding = it
             binding.recyclerSearch.adapter = adapter
+            binding.btnAddProfile.setOnClickListener {
+//                val directions = AddProfileFragmentDirections.actionFirstProfileToHomeProfiles()
+//                findNavController().navigate(directions)
+            }
         }.root
     }
 
