@@ -7,4 +7,5 @@
     <string name="add_first_profile_description">Basta digitar o nome de usuário abaixo para conferir a quantidade de curtidas em todas as postagem daquele perfil.</string>
     <string name="instagram_username_label_indicator">Usuário do Instagram</string>
     <string name="instagram_username_hint">Digite o nome de usuário</string>
+    <string name="instagram_username_pattern">\@%1$s</string>
 </resources>

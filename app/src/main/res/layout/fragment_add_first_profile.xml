@@ -3,16 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center_horizontal"
+        android:clipToPadding="false"
         android:paddingStart="@dimen/spacing_big"
         android:paddingEnd="@dimen/spacing_big"
         android:paddingTop="@dimen/spacing_big"
         android:paddingBottom="@dimen/spacing_big">
 
+        <Space
+            android:id="@+id/space_top"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"/>
+
         <ImageView
+            android:id="@+id/logo_view"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:src="@drawable/logotype_likes_view_colored"
@@ -51,26 +60,48 @@
             android:layout_marginTop="@dimen/spacing_small"
             style="@style/LikesView.FirstProfile.TextInputLayout">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textCursorDrawable="@null"
                 android:textFontWeight="600"
+                android:importantForAutofill="no"
                 android:textSize="14sp"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
                 android:hint="@string/instagram_username_hint"
-                android:textColorHint="#B1FFFFFF"/>
+                android:textColorHint="#B1FFFFFF"
+                android:nextFocusForward="@id/btn_add_profile"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_add_first_profile"/>
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_profile"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="50dp"
             android:text="@string/add_first_profile_text"
             android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textStyle="bold"
             android:textColor="?attr/colorAccent"
             android:letterSpacing="0"
             app:cornerRadius="8dp"
             app:backgroundTint="@android:color/white"/>
+
+        <Space
+            android:id="@+id/space_bot"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"/>
 
     </LinearLayout>
 </layout>

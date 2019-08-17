@@ -37,6 +37,8 @@
             android:layout_marginEnd="@dimen/spacing_big"
             android:text="@string/onboarding_complete"
             android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textStyle="bold"
             android:textColor="?attr/colorAccent"
             android:letterSpacing="0"
             app:cornerRadius="8dp"
