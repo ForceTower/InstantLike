@@ -8,6 +8,10 @@ import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
+import com.forcetower.likesview.core.DistinctObserver
 import com.forcetower.likesview.core.extensions.doOnApplyWindowInsets
 import com.forcetower.likesview.core.vm.ViewModelFactory
 import com.forcetower.likesview.databinding.FragmentHomeProfileBinding
@@ -21,16 +25,19 @@ class HomeProfileFragment : DaggerFragment() {
     private lateinit var binding: FragmentHomeProfileBinding
     private val viewModel: ProfileViewModel by viewModels { factory }
     private lateinit var mediaAdapter: ProfileMediaAdapter
+    private lateinit var reelsAdapter: ReelsMediaAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mediaAdapter = ProfileMediaAdapter()
+        mediaAdapter = ProfileMediaAdapter(viewModel)
+        reelsAdapter = ReelsMediaAdapter(viewModel)
         return FragmentHomeProfileBinding.inflate(inflater, container, false).also {
             binding = it
             binding.recyclerMedias.adapter = mediaAdapter
+            binding.recyclerReels.adapter = reelsAdapter
         }.root
     }
 
@@ -41,14 +48,14 @@ class HomeProfileFragment : DaggerFragment() {
             v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
         }
 
-        val username = "netflix"
-        viewModel.getProfile(username).observe(this, Observer {
+        viewModel.getSelectedProfile().observe(this, DistinctObserver {
             binding.profile = it
         })
-        viewModel.getMedias(username).observe(this, Observer {
-            if (it.isNotEmpty()) {
-                mediaAdapter.submitList(it)
-            }
+        viewModel.getSelectedProfileMedias().observe(this, DistinctObserver {
+            mediaAdapter.submitList(it)
+        })
+        viewModel.getProfiles().observe(this, DistinctObserver {
+            reelsAdapter.submitList(it)
         })
     }
 }

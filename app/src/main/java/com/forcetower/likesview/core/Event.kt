@@ -25,3 +25,13 @@ class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Obser
         }
     }
 }
+
+class DistinctObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<T> {
+    private var current: T? = null
+    override fun onChanged(t: T) {
+        if (t != current) {
+            current = t
+            onEventUnhandledContent(t)
+        }
+    }
+}

@@ -9,9 +9,11 @@ import com.forcetower.likesview.core.extensions.inflate
 import com.forcetower.likesview.core.model.values.InstagramMedia
 import com.forcetower.likesview.databinding.ItemProfileHomeMediaBinding
 
-class ProfileMediaAdapter : ListAdapter<InstagramMedia, ProfileMediaAdapter.MediaHolder>(DiffCallback) {
+class ProfileMediaAdapter(
+    private val actions: ProfileActions
+) : ListAdapter<InstagramMedia, ProfileMediaAdapter.MediaHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaHolder {
-        return MediaHolder(parent.inflate(R.layout.item_profile_home_media))
+        return MediaHolder(parent.inflate(R.layout.item_profile_home_media), actions)
     }
 
     override fun onBindViewHolder(holder: MediaHolder, position: Int) {
@@ -22,8 +24,13 @@ class ProfileMediaAdapter : ListAdapter<InstagramMedia, ProfileMediaAdapter.Medi
     }
 
     inner class MediaHolder(
-        val binding: ItemProfileHomeMediaBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+        val binding: ItemProfileHomeMediaBinding,
+        actions: ProfileActions
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.actions = actions
+        }
+    }
 
     private object DiffCallback : DiffUtil.ItemCallback<InstagramMedia>() {
         override fun areItemsTheSame(oldItem: InstagramMedia, newItem: InstagramMedia): Boolean {

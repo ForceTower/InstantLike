@@ -2,15 +2,29 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="profile"
+            type="com.forcetower.likesview.core.model.helpers.BasicProfile" />
+        <variable
+            name="actions"
+            type="com.forcetower.likesview.ui.profile.ProfileActions" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="50dp"
-        android:layout_height="56dp">
+        android:layout_height="56dp"
+        app:selectedProfileMargin="@{profile.selected}"
+        android:onClick="@{() -> actions.onReelClicked(profile)}"
+        android:animateLayoutChanges="true">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/user_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:elevation="4dp"
+            app:imageUrl="@{profile.pictureUrl}"
             app:riv_oval="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +37,7 @@
             android:layout_height="6dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
+            app:goneUnless="@{profile.selected}"
             android:elevation="5dp"
             android:background="@color/selectedProfileColor"
             app:clipToCircle="@{true}"

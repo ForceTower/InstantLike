@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.forcetower.likesview.R
 import com.forcetower.likesview.core.extensions.inflate
-import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.transfer.InstagramUserSearch
 import com.forcetower.likesview.databinding.ItemAddFirstProfileBinding
 
 class AddProfileAdapter(

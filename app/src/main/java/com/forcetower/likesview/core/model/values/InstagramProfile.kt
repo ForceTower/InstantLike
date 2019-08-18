@@ -1,12 +1,12 @@
 package com.forcetower.likesview.core.model.values
 
+import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.transfer.InstagramUserSearch
 import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
-import timber.log.Timber
 import java.util.Calendar
 
 @Entity(indices = [
@@ -30,11 +30,35 @@ data class InstagramProfile(
     val nextCachedPage: String?,
     val hasCachedNextPage: Boolean,
     val lastUpdate: Long,
+    var meanLikes: Int = 0,
     @ColumnInfo(name = "selected")
     var isSelected: Boolean = false,
     var lastChecked: Long = 0,
     var insertedAt: Long = 0
 ) {
+    fun merge(old: InstagramProfile?): InstagramProfile {
+        return InstagramProfile(
+            id,
+            username,
+            name,
+            pictureUrl,
+            pictureUrlHd,
+            biography,
+            followingCount,
+            followersCount,
+            postCount,
+            isPrivate,
+            isVerified,
+            nextCachedPage,
+            hasCachedNextPage,
+            lastUpdate,
+            meanLikes,
+            isSelected = old?.isSelected ?: isSelected,
+            lastChecked = old?.lastChecked ?: insertedAt,
+            insertedAt = old?.insertedAt ?: insertedAt
+        )
+    }
+
     companion object {
         fun createFromFetch(fetchResult: ProfileFetchResult): InstagramProfile? {
             val user = fetchResult.graph?.user

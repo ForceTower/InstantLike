@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.forcetower.likesview.core.EventObserver
 import com.forcetower.likesview.core.extensions.closeKeyboard
-import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.transfer.InstagramUserSearch
 import com.forcetower.likesview.core.model.values.InstagramProfile
 import com.forcetower.likesview.core.vm.ViewModelFactory
 import com.forcetower.likesview.databinding.FragmentAddFirstProfileBinding

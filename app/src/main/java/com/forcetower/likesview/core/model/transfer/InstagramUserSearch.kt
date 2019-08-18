@@ -1,4 +1,4 @@
-package com.forcetower.likesview.core.model
+package com.forcetower.likesview.core.model.transfer
 
 import com.google.gson.annotations.SerializedName
 

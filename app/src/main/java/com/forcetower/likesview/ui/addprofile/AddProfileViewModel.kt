@@ -2,7 +2,7 @@ package com.forcetower.likesview.ui.addprofile
 
 import androidx.lifecycle.*
 import com.forcetower.likesview.core.extensions.limit
-import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.transfer.InstagramUserSearch
 import com.forcetower.likesview.core.service.InstagramAPI
 import com.forcetower.likesview.core.Event
 import com.forcetower.likesview.core.model.values.InstagramProfile

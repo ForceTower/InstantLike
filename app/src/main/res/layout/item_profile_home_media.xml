@@ -7,6 +7,9 @@
         <variable
             name="media"
             type="com.forcetower.likesview.core.model.values.InstagramMedia" />
+        <variable
+            name="actions"
+            type="com.forcetower.likesview.ui.profile.ProfileActions" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -14,7 +17,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
-        android:layout_margin="2dp">
+        android:layout_margin="2dp"
+        android:onClick="@{() -> actions.onMediaClicked(media)}">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

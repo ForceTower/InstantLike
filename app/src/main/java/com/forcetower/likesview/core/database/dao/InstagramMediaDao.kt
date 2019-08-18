@@ -21,4 +21,7 @@ abstract class InstagramMediaDao {
 
     @Query("SELECT im.* FROM InstagramMedia im INNER JOIN InstagramProfile ip ON im.profileId = ip.id WHERE ip.username = :username ORDER BY im.takenAt DESC")
     abstract fun getMediasOfProfile(username: String): LiveData<List<InstagramMedia>>
+
+    @Query("SELECT im.* FROM InstagramMedia im INNER JOIN InstagramProfile ip ON im.profileId = ip.id WHERE ip.selected = 1 ORDER BY im.takenAt DESC")
+    abstract fun getMediasOfSelectedProfile(): LiveData<List<InstagramMedia>>
 }

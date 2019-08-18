@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "de93f36d0b864c7a8f045d601dbd424b",
+    "identityHash": "ed5a146f4907dadff2f11e199b184836",
     "entities": [
       {
         "tableName": "InstagramProfile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `name` TEXT, `pictureUrl` TEXT, `pictureUrlHd` TEXT, `biography` TEXT, `followingCount` INTEGER NOT NULL, `followersCount` INTEGER NOT NULL, `postCount` INTEGER NOT NULL, `private` INTEGER NOT NULL, `verified` INTEGER NOT NULL, `nextCachedPage` TEXT, `hasCachedNextPage` INTEGER NOT NULL, `lastUpdate` INTEGER NOT NULL, `selected` INTEGER NOT NULL, `lastChecked` INTEGER NOT NULL, `insertedAt` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `name` TEXT, `pictureUrl` TEXT, `pictureUrlHd` TEXT, `biography` TEXT, `followingCount` INTEGER NOT NULL, `followersCount` INTEGER NOT NULL, `postCount` INTEGER NOT NULL, `private` INTEGER NOT NULL, `verified` INTEGER NOT NULL, `nextCachedPage` TEXT, `hasCachedNextPage` INTEGER NOT NULL, `lastUpdate` INTEGER NOT NULL, `meanLikes` INTEGER NOT NULL, `selected` INTEGER NOT NULL, `lastChecked` INTEGER NOT NULL, `insertedAt` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -89,6 +89,12 @@
           {
             "fieldPath": "lastUpdate",
             "columnName": "lastUpdate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meanLikes",
+            "columnName": "meanLikes",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -266,7 +272,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'de93f36d0b864c7a8f045d601dbd424b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ed5a146f4907dadff2f11e199b184836')"
     ]
   }
 }

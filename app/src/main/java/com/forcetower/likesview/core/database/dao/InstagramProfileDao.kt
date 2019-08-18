@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.forcetower.likesview.core.model.helpers.BasicProfile
 import com.forcetower.likesview.core.model.values.InstagramProfile
 import java.util.Calendar
 
@@ -20,8 +21,8 @@ abstract class InstagramProfileDao {
     @Query("SELECT * FROM InstagramProfile WHERE username = :username")
     abstract fun getProfile(username: String): LiveData<InstagramProfile>
 
-    @Query("SELECT username FROM InstagramProfile")
-    abstract fun getUsernames(): LiveData<List<String>>
+    @Query("SELECT username, pictureUrl, selected, name FROM InstagramProfile")
+    abstract fun getUsernames(): LiveData<List<BasicProfile>>
 
     @Query("DELETE FROM InstagramProfile WHERE username = :username")
     abstract suspend fun delete(username: String)
@@ -47,4 +48,7 @@ abstract class InstagramProfileDao {
         insert(profile)
         markSelected(profile.username)
     }
+
+    @Query("SELECT * FROM InstagramProfile WHERE username = :username")
+    abstract suspend fun getProfileDirect(username: String): InstagramProfile?
 }

@@ -260,7 +260,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/black"
-                                android:text="not_calc"
+                                app:textNumberWithK="@{profile.meanLikes}"
                                 android:textFontWeight="600"
                                 android:textSize="18sp"
                                 tools:text="945" />

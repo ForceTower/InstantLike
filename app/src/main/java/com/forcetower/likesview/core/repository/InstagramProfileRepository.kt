@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.room.withTransaction
 import com.forcetower.likesview.core.database.LikeDatabase
 import com.forcetower.likesview.core.model.values.InstagramMedia
 import com.forcetower.likesview.core.model.values.InstagramProfile
@@ -33,22 +34,34 @@ class InstagramProfileRepository @Inject constructor(
     suspend fun getProfile(username: String): LiveData<InstagramProfile> {
         return liveData {
             emitSource(database.instagramProfiles().getProfile(username))
-            try {
-                val result = service.getUser(username)
-                val profile = InstagramProfile.createFromFetch(result)
-                val medias = InstagramMedia.getMediaListFromProfileFetch(result, deviceWidth / 3)
-                if (profile != null) {
-                    database.instagramProfiles().insert(profile)
-                    database.instagramMedia().insert(medias)
-                }
-            } catch (exception: HttpException) {
-                Timber.d("A exception was raised")
-                Timber.e(exception)
-            }
+            updateProfile(username)
         }
     }
 
-    fun getUsernames() = database.instagramProfiles().getUsernames()
+    private suspend fun updateProfile(username: String) {
+        try {
+            val result = service.getUser(username)
+            val profile = InstagramProfile.createFromFetch(result)
+            val medias = InstagramMedia.getMediaListFromProfileFetch(result, deviceWidth / 3)
+            if (medias.isNotEmpty()) {
+                val mean = medias.sumBy { it.likes } / medias.size
+                profile?.apply { meanLikes = mean }
+            }
+            if (profile != null) {
+                val old = database.instagramProfiles().getProfileDirect(username)
+                val merged = profile.merge(old)
+                database.withTransaction {
+                    database.instagramProfiles().insert(merged)
+                    database.instagramMedia().insert(medias)
+                }
+            }
+        } catch (exception: HttpException) {
+            Timber.d("A exception was raised")
+            Timber.e(exception)
+        }
+    }
+
+    fun getAvailableProfiles() = database.instagramProfiles().getUsernames()
 
     suspend fun insertProfile(profile: InstagramProfile) {
         profile.apply {
@@ -61,5 +74,14 @@ class InstagramProfileRepository @Inject constructor(
 
     fun getMedias(username: String): LiveData<List<InstagramMedia>> {
         return database.instagramMedia().getMediasOfProfile(username)
+    }
+
+    fun getSelectedProfileMedias(): LiveData<List<InstagramMedia>> {
+        return database.instagramMedia().getMediasOfSelectedProfile()
+    }
+
+    suspend fun setSelectedProfile(username: String) {
+        database.instagramProfiles().setCurrentProfile(username)
+        updateProfile(username)
     }
 }
