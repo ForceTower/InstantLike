@@ -42,7 +42,7 @@ class InstagramProfileRepository @Inject constructor(
         try {
             val result = service.getUser(username)
             val profile = InstagramProfile.createFromFetch(result)
-            val medias = InstagramMedia.getMediaListFromProfileFetch(result, deviceWidth / 3)
+            val medias = InstagramMedia.getMediaListFromProfileFetch(result, deviceWidth / 3, profile?.nextCachedPage)
             if (medias.isNotEmpty()) {
                 val mean = medias.sumBy { it.likes } / medias.size
                 profile?.apply { meanLikes = mean }

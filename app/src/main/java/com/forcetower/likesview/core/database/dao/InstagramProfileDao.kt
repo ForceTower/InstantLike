@@ -51,4 +51,7 @@ abstract class InstagramProfileDao {
 
     @Query("SELECT * FROM InstagramProfile WHERE username = :username")
     abstract suspend fun getProfileDirect(username: String): InstagramProfile?
+
+    @Query("SELECT * FROM InstagramMedia WHERE id = :userId")
+    abstract suspend fun getProfileById(userId: Long): InstagramProfile?
 }

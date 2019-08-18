@@ -33,7 +33,8 @@ data class InstagramMedia (
     val thumbnailSrc: String?,
     val dimensionWidth: Int,
     val dimensionHeight: Int,
-    val lastUpdated: Long
+    val lastUpdated: Long,
+    val nextPage: String?
 ) {
     @Ignore
     val pictureUrlSmall = thumbnailSrc ?: displayUrl
@@ -41,13 +42,13 @@ data class InstagramMedia (
     val isGallery = type == "GraphSidecar"
 
     companion object {
-        fun getMediaListFromProfileFetch(fetchResult: ProfileFetchResult, desiredWidth: Int): List<InstagramMedia> {
+        fun getMediaListFromProfileFetch(fetchResult: ProfileFetchResult, desiredWidth: Int, nextPage: String?): List<InstagramMedia> {
             val profile = fetchResult.graph?.user?.id ?: 0
             val edges = fetchResult.graph?.user?.edgeMedia?.edges ?: emptyList()
-            return edges.map { createFromMediaProfileNode(it.node, desiredWidth, profile) }
+            return edges.map { createFromMediaProfileNode(it.node, desiredWidth, profile, nextPage) }
         }
 
-        private fun createFromMediaProfileNode(node: MediaGraph, desiredWidth: Int = 0, profileId: Long): InstagramMedia {
+        private fun createFromMediaProfileNode(node: MediaGraph, desiredWidth: Int = 0, profileId: Long, nextPage: String? = null): InstagramMedia {
             return InstagramMedia(
                 node.id,
                 node.owner?.id ?: profileId,
@@ -63,7 +64,8 @@ data class InstagramMedia (
                 findBestThumbnailForDevice(node, desiredWidth),
                 node.dimensions?.width ?: 1,
                 node.dimensions?.height ?: 1,
-                Calendar.getInstance().timeInMillis
+                Calendar.getInstance().timeInMillis,
+                nextPage
             )
         }
 
