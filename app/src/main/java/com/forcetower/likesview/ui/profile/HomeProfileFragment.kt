@@ -51,8 +51,8 @@ class HomeProfileFragment : DaggerFragment() {
         viewModel.getSelectedProfile().observe(this, DistinctObserver {
             binding.profile = it
         })
-        viewModel.getSelectedProfileMedias().observe(this, DistinctObserver {
-            mediaAdapter.submitList(it)
+        viewModel.getSelectedProfileMedias().observe(this, Observer {
+            if (it.isNotEmpty()) mediaAdapter.submitList(it)
         })
         viewModel.getProfiles().observe(this, DistinctObserver {
             reelsAdapter.submitList(it)

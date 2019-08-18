@@ -2,41 +2,36 @@ package com.forcetower.likesview.core.repository
 
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
-import com.forcetower.likesview.core.PagingRequestHelper
 import com.forcetower.likesview.core.database.LikeDatabase
 import com.forcetower.likesview.core.model.values.InstagramMedia
 import com.forcetower.likesview.core.model.values.InstagramProfile
 import com.forcetower.likesview.core.service.InstagramAPI
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.google.gson.Gson
 import timber.log.Timber
-import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class ProfilePicturesBoundaryCallback(
-    private val userId: Long,
     private val database: LikeDatabase,
     private val service: InstagramAPI,
-    private val responseHandler: (Long, List<InstagramMedia>) -> Unit,
-    private val executor: Executor,
     private val desiredWidth: Int
 ) : PagedList.BoundaryCallback<InstagramMedia>() {
     var loadingZero = false
     var loadingAfter = false
-    // private val networkState = helper.createStatusLiveData()
+    private var userId: Long? = null
+    private val executor = Executors.newSingleThreadExecutor()
 
     @MainThread
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
         if (loadingZero) return
         loadingZero = true
-        suspend {
-            withContext(Dispatchers.IO) {
-                val page = service.getProfilePage(userId)
-                val profile = InstagramProfile.createFromFetch(page)
-                val medias = InstagramMedia.getMediaListFromProfileFetch(page, desiredWidth, profile?.nextCachedPage)
-                database.instagramMedia().insert(medias)
-                loadingZero = false
-            }
+        Timber.d("On zero items loaded")
+
+        executor.execute {
+            val id = userId ?: database.instagramProfiles().getSelectedProfileDirect()?.id ?: 0
+            Timber.d("Id resolved to $id")
+            requestPage(id)
+            loadingZero = false
         }
     }
 
@@ -44,15 +39,49 @@ class ProfilePicturesBoundaryCallback(
         super.onItemAtEndLoaded(itemAtEnd)
         if (loadingAfter) return
         loadingAfter = true
-        val nextPage = itemAtEnd.nextPage ?: return
-        suspend {
-            withContext(Dispatchers.IO) {
-                val page = service.getProfilePage(userId, maxId = nextPage)
-                val profile = InstagramProfile.createFromFetch(page)
-                val medias = InstagramMedia.getMediaListFromProfileFetch(page, desiredWidth, profile?.nextCachedPage)
-                database.instagramMedia().insert(medias)
-                loadingAfter = false
-            }
+        val nextPage = itemAtEnd.nextPage
+        Timber.d("On item at end loaded $nextPage")
+        nextPage ?: return
+        executor.execute {
+            val id = userId ?: database.instagramProfiles().getSelectedProfileDirect()?.id ?: 0
+            requestPage(id, nextPage)
+            Timber.d("Completed inserting end items")
+            loadingAfter = false
         }
+    }
+
+    private fun requestPage(id: Long, maxId: String? = null) {
+        val pageCall = service.getProfilePage(createQueryMap(id, maxId = maxId))
+        val page = pageCall.execute().body()!!
+        val user = page.data?.user ?: page.graph?.user
+        val pageInfo = user?.edgeMedia?.pageInfo
+        val nextPage = pageInfo?.endCursor
+        val hasNextPage = pageInfo?.hasNextPage ?: false
+        database.instagramProfiles().updateNextPage(id, nextPage, hasNextPage)
+        val medias = InstagramMedia.getMediaListFromProfileFetch(page, desiredWidth, nextPage)
+        Timber.d("New medias ${medias.size}")
+        database.instagramMedia().insertNonBlock(medias)
+        Timber.d("Completed zero items")
+        userId = id
+    }
+
+    private fun createQueryMap(
+        userId: Long,
+        amount: Int = 12,
+        maxId: String? = null
+    ): Map<String, String> {
+        val gson = Gson()
+        val variables = gson.toJson(
+            mutableMapOf(
+                "id" to userId,
+                "first" to amount,
+                "after" to maxId
+            )
+        )
+
+        Timber.d("Variables: $variables")
+        return mutableMapOf(
+            "variables" to variables
+        )
     }
 }

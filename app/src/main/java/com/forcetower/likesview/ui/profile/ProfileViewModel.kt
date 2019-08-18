@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.forcetower.likesview.core.Event
 import com.forcetower.likesview.core.model.helpers.BasicProfile
 import com.forcetower.likesview.core.model.values.InstagramMedia
@@ -29,7 +30,7 @@ class ProfileViewModel @Inject constructor(
         return repository.getMedias(username)
     }
 
-    fun getSelectedProfileMedias(): LiveData<List<InstagramMedia>> {
+    fun getSelectedProfileMedias(): LiveData<PagedList<InstagramMedia>> {
         return repository.getSelectedProfileMedias()
     }
 

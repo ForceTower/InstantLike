@@ -1,6 +1,7 @@
 package com.forcetower.likesview.ui.profile
 
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.forcetower.likesview.databinding.ItemProfileHomeMediaBinding
 
 class ProfileMediaAdapter(
     private val actions: ProfileActions
-) : ListAdapter<InstagramMedia, ProfileMediaAdapter.MediaHolder>(DiffCallback) {
+) : PagedListAdapter<InstagramMedia, ProfileMediaAdapter.MediaHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaHolder {
         return MediaHolder(parent.inflate(R.layout.item_profile_home_media), actions)
     }

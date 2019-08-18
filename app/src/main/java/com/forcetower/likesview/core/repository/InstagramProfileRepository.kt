@@ -3,13 +3,15 @@ package com.forcetower.likesview.core.repository
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import androidx.room.withTransaction
 import com.forcetower.likesview.core.database.LikeDatabase
 import com.forcetower.likesview.core.model.values.InstagramMedia
 import com.forcetower.likesview.core.model.values.InstagramProfile
 import com.forcetower.likesview.core.service.InstagramAPI
-import retrofit2.HttpException
 import timber.log.Timber
 import java.util.Calendar
 import javax.inject.Inject
@@ -32,10 +34,8 @@ class InstagramProfileRepository @Inject constructor(
     }
 
     suspend fun getProfile(username: String): LiveData<InstagramProfile> {
-        return liveData {
-            emitSource(database.instagramProfiles().getProfile(username))
-            updateProfile(username)
-        }
+        updateProfile(username)
+        return database.instagramProfiles().getProfile(username)
     }
 
     private suspend fun updateProfile(username: String) {
@@ -55,7 +55,7 @@ class InstagramProfileRepository @Inject constructor(
                     database.instagramMedia().insert(medias)
                 }
             }
-        } catch (exception: HttpException) {
+        } catch (exception: Throwable) {
             Timber.d("A exception was raised")
             Timber.e(exception)
         }
@@ -76,12 +76,22 @@ class InstagramProfileRepository @Inject constructor(
         return database.instagramMedia().getMediasOfProfile(username)
     }
 
-    fun getSelectedProfileMedias(): LiveData<List<InstagramMedia>> {
-        return database.instagramMedia().getMediasOfSelectedProfile()
+    fun getSelectedProfileMedias(): LiveData<PagedList<InstagramMedia>> {
+        return database.instagramMedia().getMediasSourceOfSelectedProfile().toLiveData(pageSize = 12)
     }
 
     suspend fun setSelectedProfile(username: String) {
         database.instagramProfiles().setCurrentProfile(username)
         updateProfile(username)
+    }
+
+    fun getSelectedProfileMediaSource(): LiveData<PagedList<InstagramMedia>> {
+        val boundary = ProfilePicturesBoundaryCallback(database, service, deviceWidth)
+
+        return database.instagramMedia().getMediasSourceOfSelectedProfile().toLiveData(
+            pageSize = 12,
+            initialLoadKey = null,
+            boundaryCallback = boundary
+        )
     }
 }

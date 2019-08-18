@@ -68,6 +68,8 @@ class ApplicationModule {
     @Singleton
     @Named("logging")
     fun provideInterceptor(): Interceptor {
-        return HttpLoggingInterceptor()
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BASIC
+        }
     }
 }

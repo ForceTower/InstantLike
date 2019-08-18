@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ed5a146f4907dadff2f11e199b184836",
+    "identityHash": "315f59d0837d298bbffae6761a84b4b9",
     "entities": [
       {
         "tableName": "InstagramProfile",
@@ -137,7 +137,7 @@
       },
       {
         "tableName": "InstagramMedia",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `profileId` INTEGER NOT NULL, `type` TEXT NOT NULL, `shortCode` TEXT NOT NULL, `displayUrl` TEXT NOT NULL, `likes` INTEGER NOT NULL, `takenAt` INTEGER NOT NULL, `caption` TEXT, `preview` TEXT, `isVideo` INTEGER NOT NULL, `accessibilityCaption` TEXT, `thumbnailSrc` TEXT, `dimensionWidth` INTEGER NOT NULL, `dimensionHeight` INTEGER NOT NULL, `lastUpdated` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `InstagramProfile`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `profileId` INTEGER NOT NULL, `type` TEXT NOT NULL, `shortCode` TEXT NOT NULL, `displayUrl` TEXT NOT NULL, `likes` INTEGER NOT NULL, `takenAt` INTEGER NOT NULL, `caption` TEXT, `preview` TEXT, `isVideo` INTEGER NOT NULL, `accessibilityCaption` TEXT, `thumbnailSrc` TEXT, `dimensionWidth` INTEGER NOT NULL, `dimensionHeight` INTEGER NOT NULL, `lastUpdated` INTEGER NOT NULL, `nextPage` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `InstagramProfile`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -228,6 +228,12 @@
             "columnName": "lastUpdated",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "nextPage",
+            "columnName": "nextPage",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -258,7 +264,7 @@
           {
             "table": "InstagramProfile",
             "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
+            "onUpdate": "NO ACTION",
             "columns": [
               "profileId"
             ],
@@ -272,7 +278,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ed5a146f4907dadff2f11e199b184836')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '315f59d0837d298bbffae6761a84b4b9')"
     ]
   }
 }

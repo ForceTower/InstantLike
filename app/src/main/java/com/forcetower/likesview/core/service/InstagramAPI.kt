@@ -2,6 +2,8 @@ package com.forcetower.likesview.core.service
 
 import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
 import com.forcetower.likesview.core.model.transfer.TopSearchResult
+import com.google.gson.Gson
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -21,11 +23,10 @@ interface InstagramAPI {
         @Path("username") username: String
     ): ProfileFetchResult
 
-    @GET("graphql/query/?query_hash={queryHash}&variables={\"id\":{userId}, \"first\":\"{amount}\", \"after\": {maxId} }")
-    suspend fun getProfilePage(
-        @Path("userId") userId: Long,
-        @Path("queryHash") queryHash: String = "42323d64886122307be10013ad2dcc44",
-        @Path("amount") amount: Int = 12,
-        @Path("maxId") maxId: String? = null
-    ): ProfileFetchResult
+    @GET("graphql/query")
+    fun getProfilePage(
+        @QueryMap(encoded = false) queryMap: Map<String, String>,
+        @Query("query_hash") queryHash: String = "42323d64886122307be10013ad2dcc44"
+    ): Call<ProfileFetchResult>
+
 }

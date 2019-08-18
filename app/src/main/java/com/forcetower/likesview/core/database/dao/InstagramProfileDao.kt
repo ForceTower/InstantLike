@@ -52,6 +52,12 @@ abstract class InstagramProfileDao {
     @Query("SELECT * FROM InstagramProfile WHERE username = :username")
     abstract suspend fun getProfileDirect(username: String): InstagramProfile?
 
-    @Query("SELECT * FROM InstagramMedia WHERE id = :userId")
+    @Query("SELECT * FROM InstagramProfile WHERE id = :userId")
     abstract suspend fun getProfileById(userId: Long): InstagramProfile?
+
+    @Query("SELECT * FROM InstagramProfile WHERE selected = 1")
+    abstract fun getSelectedProfileDirect(): InstagramProfile?
+
+    @Query("UPDATE InstagramProfile SET nextCachedPage = :nextPage, hasCachedNextPage = :hasNextPage WHERE id = :id")
+    abstract fun updateNextPage(id: Long, nextPage: String?, hasNextPage: Boolean)
 }

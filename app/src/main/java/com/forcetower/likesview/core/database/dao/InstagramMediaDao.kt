@@ -1,6 +1,7 @@
 package com.forcetower.likesview.core.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,6 +17,9 @@ abstract class InstagramMediaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insert(values: List<InstagramMedia>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun insertNonBlock(values: List<InstagramMedia>)
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun update(value: InstagramMedia)
 
@@ -24,4 +28,7 @@ abstract class InstagramMediaDao {
 
     @Query("SELECT im.* FROM InstagramMedia im INNER JOIN InstagramProfile ip ON im.profileId = ip.id WHERE ip.selected = 1 ORDER BY im.takenAt DESC")
     abstract fun getMediasOfSelectedProfile(): LiveData<List<InstagramMedia>>
+
+    @Query("SELECT im.* FROM InstagramMedia im INNER JOIN InstagramProfile ip ON im.profileId = ip.id WHERE ip.selected = 1 ORDER BY im.takenAt DESC")
+    abstract fun getMediasSourceOfSelectedProfile(): DataSource.Factory<Int, InstagramMedia>
 }

@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ProfileFetchResult (
     @SerializedName("graphql")
-    val graph: GraphUser?
+    val graph: GraphUser?,
+    val data: GraphUser?
 )
 
 data class GraphUser(
@@ -61,7 +62,7 @@ data class MediaGraph (
     val shortCode: String,
     @SerializedName("display_url")
     val displayUrl: String,
-    @SerializedName("edge_liked_by")
+    @SerializedName("edge_media_preview_like")
     val likedEdge: GraphEdge<Any>?,
     @SerializedName("edge_media_to_caption")
     val captionEdge: GraphEdge<CaptionEdge>?,

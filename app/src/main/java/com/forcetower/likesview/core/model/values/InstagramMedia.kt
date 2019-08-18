@@ -3,11 +3,13 @@ package com.forcetower.likesview.core.model.values
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.NO_ACTION
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.forcetower.likesview.core.model.transfer.MediaGraph
 import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
+import timber.log.Timber
 import java.util.Calendar
 import kotlin.math.abs
 
@@ -15,7 +17,7 @@ import kotlin.math.abs
     Index(value = ["shortCode"], unique = true),
     Index(value = ["profileId"])
 ], foreignKeys = [
-    ForeignKey(entity = InstagramProfile::class, parentColumns = ["id"], childColumns = ["profileId"], onUpdate = CASCADE, onDelete = CASCADE)
+    ForeignKey(entity = InstagramProfile::class, parentColumns = ["id"], childColumns = ["profileId"], onUpdate = NO_ACTION, onDelete = CASCADE)
 ])
 data class InstagramMedia (
     @PrimaryKey
@@ -43,8 +45,9 @@ data class InstagramMedia (
 
     companion object {
         fun getMediaListFromProfileFetch(fetchResult: ProfileFetchResult, desiredWidth: Int, nextPage: String?): List<InstagramMedia> {
-            val profile = fetchResult.graph?.user?.id ?: 0
-            val edges = fetchResult.graph?.user?.edgeMedia?.edges ?: emptyList()
+            val user = fetchResult.graph?.user ?: fetchResult.data?.user
+            val profile = user?.id ?: 0
+            val edges = user?.edgeMedia?.edges ?: emptyList()
             return edges.map { createFromMediaProfileNode(it.node, desiredWidth, profile, nextPage) }
         }
 
