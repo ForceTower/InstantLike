@@ -10,5 +10,19 @@
         android:id="@+id/home"
         android:name="com.forcetower.likesview.ui.profile.HomeProfileFragment"
         android:label="HomeProfileFragment"
-        tools:layout="@layout/fragment_home_profile"/>
+        tools:layout="@layout/fragment_home_profile">
+        <action
+            android:id="@+id/action_home_to_media_list"
+            app:destination="@id/media_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/media_list"
+        android:name="com.forcetower.likesview.ui.media.MediaListFragment"
+        android:label="MediaListFragment"
+        tools:layout="@layout/fragment_media_details">
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

@@ -85,13 +85,14 @@ class InstagramProfileRepository @Inject constructor(
         updateProfile(username)
     }
 
-    fun getSelectedProfileMediaSource(): LiveData<PagedList<InstagramMedia>> {
-        val boundary = ProfilePicturesBoundaryCallback(database, service, deviceWidth)
+    fun getSelectedProfileMediaSource(pageSize: Int = 20): LiveData<PagedList<InstagramMedia>> {
+        val boundary = ProfilePicturesBoundaryCallback(database, service, 120)
 
         return database.instagramMedia().getMediasSourceOfSelectedProfile().toLiveData(
-            pageSize = 20,
+            pageSize = pageSize,
             initialLoadKey = null,
-            fetchExecutor = Executors.newSingleThreadExecutor()
+            fetchExecutor = Executors.newSingleThreadExecutor(),
+            boundaryCallback = boundary
         )
     }
 }

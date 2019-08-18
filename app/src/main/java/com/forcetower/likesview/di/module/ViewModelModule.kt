@@ -6,6 +6,7 @@ import com.forcetower.likesview.core.vm.ViewModelFactory
 import com.forcetower.likesview.di.annotation.ViewModelKey
 import com.forcetower.likesview.ui.LaunchViewModel
 import com.forcetower.likesview.ui.addprofile.AddProfileViewModel
+import com.forcetower.likesview.ui.media.MediaListViewModel
 import com.forcetower.likesview.ui.profile.ProfileViewModel
 import dagger.Binds
 import dagger.Module
@@ -27,6 +28,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MediaListViewModel::class)
+    abstract fun bindMediaListViewModel(viewModel: MediaListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="media"
+            type="com.forcetower.likesview.core.model.values.InstagramMedia" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/spacing_common">
+        <ImageView
+            android:id="@+id/image_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:calculateMediaParams="@{media}"
+            app:imageUrl="@{media.displayUrl}"
+            android:contentDescription="@{media.accessibilityCaption}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic"/>
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/spacing_common"
+            android:layout_marginEnd="@dimen/spacing_common"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{media.caption}"
+            app:layout_constraintTop_toBottomOf="@id/image_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="\@julianadoe Essa é a legenda da foto da Juliana.  O Instagram não limita o número de linhas possiveis para as coisas, mas nós precisamos"/>
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_common"
+            android:textSize="12sp"
+            android:textColor="@color/textTertiary"
+            android:textFontWeight="500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/caption"
+            tools:text="Há 2 dias" />
+
+        <View
+            android:id="@+id/content_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timestamp"/>
+
+        <ImageView
+            android:id="@+id/im_like"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/spacing_common"
+            android:contentDescription="@string/likes_amount_description"
+            android:src="@drawable/icon_likes"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/like_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content_divider"/>
+
+        <TextView
+            android:id="@+id/like_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            app:textNumberWithK="@{media.likes}"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:textFontWeight="600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/im_like"
+            app:layout_constraintTop_toTopOf="@id/im_like"
+            app:layout_constraintBottom_toBottomOf="@id/im_like"
+            tools:text="88.4k"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="Total de Curtidas"
+            android:textSize="14sp"
+            android:textFontWeight="500"
+            android:textColor="@color/textQuarter"
+            app:layout_constraintTop_toBottomOf="@id/like_amount"
+            app:layout_constraintStart_toStartOf="@id/im_like"
+            app:layout_constraintEnd_toEndOf="@id/like_amount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

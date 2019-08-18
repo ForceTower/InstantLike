@@ -18,6 +18,10 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: InstagramProfileRepository
 ) : ViewModel(), ProfileActions {
+    private val _mediaClick = MutableLiveData<Event<InstagramMedia>>()
+    val mediaClick: LiveData<Event<InstagramMedia>>
+        get() = _mediaClick
+
     fun getProfiles() = repository.getAvailableProfiles()
 
     fun getProfile(username: String): LiveData<InstagramProfile> {
@@ -52,5 +56,6 @@ class ProfileViewModel @Inject constructor(
 
     override fun onMediaClicked(media: InstagramMedia?) {
         media ?: return
+        _mediaClick.value = Event(media)
     }
 }

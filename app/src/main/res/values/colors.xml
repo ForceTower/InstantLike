@@ -6,5 +6,7 @@
     <color name="selectedProfileColor">#439AFF</color>
     <color name="divider">#EAEAEA</color>
     <color name="textSecondary">#262626</color>
+    <color name="textTertiary">#B3B3B3</color>
+    <color name="textQuarter">#5C5C5C</color>
     <color name="card_stroke_profile">#DCDCDC</color>
 </resources>
