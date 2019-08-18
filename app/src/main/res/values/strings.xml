@@ -15,4 +15,5 @@
     <string name="following">Seguindo</string>
     <string name="instagram_post_amount">Total de postagens</string>
     <string name="instagram_mean_like">Média de curtidas</string>
+    <string name="like_amount_media_details">Total de Curtidas</string>
 </resources>

@@ -7,8 +7,11 @@ import androidx.room.ForeignKey.NO_ACTION
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.forcetower.likesview.core.model.transfer.MediaGraph
 import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
+import com.forcetower.likesview.core.model.values.InstagramMedia.GalleryContent.Companion.createDefault
+import com.google.gson.Gson
 import timber.log.Timber
 import java.util.Calendar
 import kotlin.math.abs
@@ -36,7 +39,8 @@ data class InstagramMedia (
     val dimensionWidth: Int,
     val dimensionHeight: Int,
     val lastUpdated: Long,
-    val nextPage: String?
+    val nextPage: String?,
+    val contents: GalleryContent
 ) {
     @Ignore
     val pictureUrlSmall = thumbnailSrc ?: displayUrl
@@ -70,7 +74,8 @@ data class InstagramMedia (
                 node.dimensions?.width ?: 1,
                 node.dimensions?.height ?: 1,
                 Calendar.getInstance().timeInMillis,
-                nextPage
+                nextPage,
+                createDefault(node.displayUrl)
             )
         }
 
@@ -92,5 +97,27 @@ data class InstagramMedia (
             }
             return selected.src
         }
+    }
+
+    data class GalleryContent(
+        val images: List<String>
+    ) {
+        companion object {
+            fun createDefault(url: String) = GalleryContent(listOf(url))
+        }
+    }
+}
+
+object InstagramMediaContentsConverter {
+    @JvmStatic
+    @TypeConverter
+    fun galleryContentToString(value: InstagramMedia.GalleryContent): String {
+        return Gson().toJson(value)
+    }
+
+    @JvmStatic
+    @TypeConverter
+    fun stringToGalleryContent(value: String): InstagramMedia.GalleryContent {
+        return Gson().fromJson(value, InstagramMedia.GalleryContent::class.java)
     }
 }

@@ -85,9 +85,8 @@ class HomeProfileFragment : DaggerFragment() {
             Timber.d("Reels ${it.size}")
             reelsAdapter.submitList(it)
         })
-        viewModel.mediaClick.observe(this, EventObserver { media ->
-            val index = currentList?.indexOfFirst { it.id == media.id } ?: 0
-            val directions = HomeProfileFragmentDirections.actionHomeToMediaList(if (index >= 0) index else 0)
+        viewModel.mediaClickPosition.observe(this, EventObserver { position ->
+            val directions = HomeProfileFragmentDirections.actionHomeToMediaList(position)
             findNavController().navigate(directions)
         })
     }

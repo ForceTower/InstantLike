@@ -5,5 +5,5 @@ import com.forcetower.likesview.core.model.values.InstagramMedia
 
 interface ProfileActions {
     fun onReelClicked(profile: BasicProfile?)
-    fun onMediaClicked(media: InstagramMedia?)
+    fun onMediaClicked(media: InstagramMedia?, position: Int)
 }

@@ -63,6 +63,10 @@ class ProfileMediaAdapter(
         ) : HomeHolder(binding.root) {
             init {
                 binding.actions = actions
+                binding.root.setOnClickListener {
+                    val position = adapterPosition
+                    actions.onMediaClicked(binding.media, position)
+                }
             }
         }
 
@@ -82,11 +86,6 @@ class ProfileMediaAdapter(
             newItem: InstagramMedia
         ): Boolean {
             return oldItem == newItem
-//            return when {
-//                oldItem.isProfile && newItem.isProfile -> oldItem.wrappedProfile == newItem.wrappedProfile
-//                !oldItem.isProfile && !newItem.isProfile -> oldItem.wrappedMedia == newItem.wrappedMedia
-//                else -> true
-//            }
         }
     }
 }

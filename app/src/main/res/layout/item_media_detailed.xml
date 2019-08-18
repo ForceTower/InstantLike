@@ -12,17 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/spacing_common">
-        <ImageView
-            android:id="@+id/image_content"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/image_content_pager"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:calculateMediaParams="@{media}"
-            app:imageUrl="@{media.displayUrl}"
             android:contentDescription="@{media.accessibilityCaption}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/caption"
@@ -36,7 +34,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:text="@{media.caption}"
-            app:layout_constraintTop_toBottomOf="@id/image_content"
+            app:layout_constraintTop_toBottomOf="@id/image_content_pager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="\@julianadoe Essa é a legenda da foto da Juliana.  O Instagram não limita o número de linhas possiveis para as coisas, mas nós precisamos"/>
@@ -94,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny"
-            android:text="Total de Curtidas"
+            android:text="@string/like_amount_media_details"
             android:textSize="14sp"
             android:textFontWeight="500"
             android:textColor="@color/textQuarter"

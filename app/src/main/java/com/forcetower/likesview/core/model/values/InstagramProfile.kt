@@ -75,7 +75,8 @@ data class InstagramProfile(
             1,
             1,
             0,
-            null
+            null,
+            InstagramMedia.GalleryContent.createDefault("...")
         ).apply {
             profile = this@InstagramProfile
         }
