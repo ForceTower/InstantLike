@@ -1,4 +1,4 @@
-package com.forcetower.likesview.core.model.transport
+package com.forcetower.likesview.core.model.transfer
 
 import com.forcetower.likesview.core.model.InstagramUserSearch
 

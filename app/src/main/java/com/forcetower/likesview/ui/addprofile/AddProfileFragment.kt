@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.forcetower.likesview.core.EventObserver
 import com.forcetower.likesview.core.extensions.closeKeyboard
+import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.values.InstagramProfile
 import com.forcetower.likesview.core.vm.ViewModelFactory
 import com.forcetower.likesview.databinding.FragmentAddFirstProfileBinding
 import dagger.android.support.DaggerFragment
@@ -25,6 +27,7 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
     private lateinit var binding: FragmentAddFirstProfileBinding
     private val viewModel: AddProfileViewModel by viewModels { factory }
     private lateinit var adapter: AddProfileAdapter
+    private var selected: InstagramUserSearch? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +40,7 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
             binding = it
             binding.recyclerSearch.adapter = adapter
             binding.btnAddProfile.setOnClickListener {
-//                val directions = AddProfileFragmentDirections.actionFirstProfileToHomeProfiles()
-//                findNavController().navigate(directions)
+                insertProfileAndLeave()
             }
         }.root
     }
@@ -46,7 +48,9 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.etSearch.addTextChangedListener(
-            beforeTextChanged = { _, _, _, _ -> Unit},
+            beforeTextChanged = { _, _, _, _ ->
+                binding.btnAddProfile.isEnabled = false
+            },
             onTextChanged = { text, _, _, _ ->
                 val username = text?.toString()?.trim() ?: ""
                 if (!username.startsWith("@")) {
@@ -66,6 +70,7 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
         })
 
         viewModel.onAddProfileClick.observe(this, EventObserver {
+            selected = it
             val fixed = "@${it.username}"
             binding.etSearch.run {
                 setText(fixed)
@@ -73,7 +78,17 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
                 clearFocus()
                 closeKeyboard()
             }
+            binding.btnAddProfile.isEnabled = true
         })
+    }
+
+    private fun insertProfileAndLeave() {
+        val current = selected
+        if (current != null) {
+            viewModel.insertProfile(InstagramProfile.createFromSearch(current))
+            val directions = AddProfileFragmentDirections.actionFirstProfileToProfileActivity()
+            findNavController().navigate(directions)
+        }
     }
 
     override fun onVisibilityChanged(isOpen: Boolean) {

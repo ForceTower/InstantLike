@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "abd1f8077274562956f60324ede02594",
+    "identityHash": "de93f36d0b864c7a8f045d601dbd424b",
     "entities": [
       {
         "tableName": "InstagramProfile",
@@ -128,12 +128,145 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "InstagramMedia",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `profileId` INTEGER NOT NULL, `type` TEXT NOT NULL, `shortCode` TEXT NOT NULL, `displayUrl` TEXT NOT NULL, `likes` INTEGER NOT NULL, `takenAt` INTEGER NOT NULL, `caption` TEXT, `preview` TEXT, `isVideo` INTEGER NOT NULL, `accessibilityCaption` TEXT, `thumbnailSrc` TEXT, `dimensionWidth` INTEGER NOT NULL, `dimensionHeight` INTEGER NOT NULL, `lastUpdated` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `InstagramProfile`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shortCode",
+            "columnName": "shortCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayUrl",
+            "columnName": "displayUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "likes",
+            "columnName": "likes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "takenAt",
+            "columnName": "takenAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caption",
+            "columnName": "caption",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "preview",
+            "columnName": "preview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isVideo",
+            "columnName": "isVideo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accessibilityCaption",
+            "columnName": "accessibilityCaption",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thumbnailSrc",
+            "columnName": "thumbnailSrc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dimensionWidth",
+            "columnName": "dimensionWidth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dimensionHeight",
+            "columnName": "dimensionHeight",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "lastUpdated",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_InstagramMedia_shortCode",
+            "unique": true,
+            "columnNames": [
+              "shortCode"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_InstagramMedia_shortCode` ON `${TABLE_NAME}` (`shortCode`)"
+          },
+          {
+            "name": "index_InstagramMedia_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "createSql": "CREATE  INDEX `index_InstagramMedia_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "InstagramProfile",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'abd1f8077274562956f60324ede02594')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'de93f36d0b864c7a8f045d601dbd424b')"
     ]
   }
 }

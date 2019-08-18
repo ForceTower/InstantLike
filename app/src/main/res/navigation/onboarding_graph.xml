@@ -19,6 +19,9 @@
         android:name="com.forcetower.likesview.ui.addprofile.AddProfileFragment"
         android:label="AddProfileFragment"
         tools:layout="@layout/fragment_add_first_profile">
+        <action
+            android:id="@+id/action_first_profile_to_profile_activity"
+            app:destination="@id/profile_activity" />
     </fragment>
     <action
         android:id="@+id/action_global_first_profile"
@@ -26,4 +29,9 @@
         app:popUpTo="@id/first_profile"
         app:popUpToInclusive="true"
         app:launchSingleTop="true" />
+    <activity
+        android:id="@+id/profile_activity"
+        android:name="com.forcetower.likesview.ui.ProfileActivity"
+        android:label="ProfileActivity"
+        tools:layout="@layout/activity_profile"/>
 </navigation>

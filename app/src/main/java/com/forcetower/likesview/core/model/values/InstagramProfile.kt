@@ -1,10 +1,11 @@
-package com.forcetower.likesview.core.model.database
+package com.forcetower.likesview.core.model.values
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.forcetower.likesview.core.model.transport.ProfileFetchResult
+import com.forcetower.likesview.core.model.InstagramUserSearch
+import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
 import timber.log.Timber
 import java.util.Calendar
 
@@ -36,7 +37,6 @@ data class InstagramProfile(
 ) {
     companion object {
         fun createFromFetch(fetchResult: ProfileFetchResult): InstagramProfile? {
-            Timber.d("Creating using fetch: $fetchResult")
             val user = fetchResult.graph?.user
             user ?: return null
             return InstagramProfile(
@@ -53,6 +53,25 @@ data class InstagramProfile(
                 user.verified,
                 user.edgeMedia?.pageInfo?.endCursor,
                 user.edgeMedia?.pageInfo?.hasNextPage ?: false,
+                Calendar.getInstance().timeInMillis
+            )
+        }
+
+        fun createFromSearch(search: InstagramUserSearch): InstagramProfile {
+            return InstagramProfile(
+                search.pk.toLong(),
+                search.username,
+                search.name,
+                search.pictureUrl,
+                null,
+                null,
+                0,
+                0,
+                0,
+                search.private,
+                search.verified,
+                null,
+                false,
                 Calendar.getInstance().timeInMillis
             )
         }

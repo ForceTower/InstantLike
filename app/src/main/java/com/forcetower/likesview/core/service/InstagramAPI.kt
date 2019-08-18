@@ -1,7 +1,7 @@
 package com.forcetower.likesview.core.service
 
-import com.forcetower.likesview.core.model.transport.ProfileFetchResult
-import com.forcetower.likesview.core.model.transport.TopSearchResult
+import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
+import com.forcetower.likesview.core.model.transfer.TopSearchResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

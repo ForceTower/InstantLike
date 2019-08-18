@@ -4,15 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestinationBuilder
-import androidx.navigation.NavGraph
 import androidx.navigation.NavInflater
 import com.forcetower.likesview.R
 import com.forcetower.likesview.core.EventObserver
 import com.forcetower.likesview.core.extensions.checkAllMatched
 import com.forcetower.likesview.core.vm.ViewModelFactory
 import dagger.android.support.DaggerAppCompatActivity
-import timber.log.Timber
 import java.util.ArrayDeque
 import javax.inject.Inject
 

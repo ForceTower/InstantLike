@@ -1,4 +1,4 @@
-package com.forcetower.likesview.core.model.transport
+package com.forcetower.likesview.core.model.transfer
 
 import com.google.gson.annotations.SerializedName
 
@@ -62,7 +62,7 @@ data class MediaGraph (
     @SerializedName("display_url")
     val displayUrl: String,
     @SerializedName("edge_liked_by")
-    val likedEdge: GraphEdge<Any>,
+    val likedEdge: GraphEdge<Any>?,
     @SerializedName("edge_media_to_caption")
     val captionEdge: GraphEdge<CaptionEdge>?,
     @SerializedName("media_preview")
@@ -72,8 +72,9 @@ data class MediaGraph (
     @SerializedName("accessibility_caption")
     val accessibilityCaption: String?,
     @SerializedName("thumbnail_resources")
-    val thumbnailResources: List<ThumbnailResource>,
-    val dimensions: DimensionsResource
+    val thumbnailResources: List<ThumbnailResource>?,
+    val dimensions: DimensionsResource?,
+    val owner: Owner?
 )
 
 data class ThumbnailResource(
@@ -91,4 +92,9 @@ data class CaptionEdge(
 data class DimensionsResource(
     val width: Int,
     val height: Int
+)
+
+data class Owner (
+    val id: Long,
+    val username: String
 )

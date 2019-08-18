@@ -1,4 +1,4 @@
-package com.forcetower.likesview.core.model.database.dao
+package com.forcetower.likesview.core.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.forcetower.likesview.core.model.database.InstagramProfile
+import com.forcetower.likesview.core.model.values.InstagramProfile
 import java.util.Calendar
 
 @Dao
@@ -15,7 +15,7 @@ abstract class InstagramProfileDao {
     abstract suspend fun insert(value: InstagramProfile)
 
     @Query("SELECT * FROM InstagramProfile WHERE selected = 1")
-    abstract fun getSelectedProfile(): LiveData<InstagramProfile>
+    abstract fun getSelectedProfile(): LiveData<InstagramProfile?>
 
     @Query("SELECT * FROM InstagramProfile WHERE username = :username")
     abstract fun getProfile(username: String): LiveData<InstagramProfile>
@@ -39,5 +39,12 @@ abstract class InstagramProfileDao {
     open suspend fun setCurrentProfile(username: String) {
         markUnselectedAll()
         markSelected(username)
+    }
+
+    @Transaction
+    open suspend fun insertSelecting(profile: InstagramProfile) {
+        markUnselectedAll()
+        insert(profile)
+        markSelected(profile.username)
     }
 }

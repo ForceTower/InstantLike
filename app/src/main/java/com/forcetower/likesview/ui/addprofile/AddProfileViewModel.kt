@@ -5,11 +5,15 @@ import com.forcetower.likesview.core.extensions.limit
 import com.forcetower.likesview.core.model.InstagramUserSearch
 import com.forcetower.likesview.core.service.InstagramAPI
 import com.forcetower.likesview.core.Event
+import com.forcetower.likesview.core.model.values.InstagramProfile
+import com.forcetower.likesview.core.repository.InstagramProfileRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AddProfileViewModel @Inject constructor(
-    private val service: InstagramAPI
+    private val service: InstagramAPI,
+    private val repository: InstagramProfileRepository
 ) : ViewModel(), ProfileActions {
     private var currentSource: LiveData<List<InstagramUserSearch>>? = null
 
@@ -47,5 +51,11 @@ class AddProfileViewModel @Inject constructor(
     override fun onAddProfileClick(user: InstagramUserSearch?) {
         user ?: return
         _onAddProfileClick.value = Event(user)
+    }
+
+    fun insertProfile(profile: InstagramProfile) {
+        viewModelScope.launch {
+            repository.insertProfile(profile)
+        }
     }
 }
