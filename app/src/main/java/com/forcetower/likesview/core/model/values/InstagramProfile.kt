@@ -59,6 +59,28 @@ data class InstagramProfile(
         )
     }
 
+    fun toIgMedia(): InstagramMedia {
+        return InstagramMedia(
+            1,
+            1,
+            "not",
+            "..",
+            "..",
+            0,
+            0,
+            null,
+            false,
+            null,
+            null,
+            1,
+            1,
+            0,
+            null
+        ).apply {
+            profile = this@InstagramProfile
+        }
+    }
+
     companion object {
         fun createFromFetch(fetchResult: ProfileFetchResult): InstagramProfile? {
             val user = fetchResult.graph?.user

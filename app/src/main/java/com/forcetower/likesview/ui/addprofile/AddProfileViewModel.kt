@@ -30,9 +30,10 @@ class AddProfileViewModel @Inject constructor(
         get() = _onAddProfileClick
 
     fun searchUsers(username: String) {
-        val data = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        val data = MutableLiveData<List<InstagramUserSearch>>()
+        viewModelScope.launch {
             val res = service.topSearch(username).users?.limit(3)?.map { it.user } ?: emptyList()
-            emit(res)
+            data.value = res
         }
 
         val src = currentSource

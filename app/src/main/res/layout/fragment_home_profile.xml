@@ -40,270 +40,31 @@
                     android:contentDescription="@string/instagram_verified_profile"
                     app:goneUnless="@{profile.verified}"/>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_reels"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_profile_reel"/>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_medias"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_reels"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:orientation="horizontal"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
-                    android:clipToPadding="false"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_profile_reel"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"/>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/user_image"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        app:imageUrl="@{profile.pictureUrl}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:riv_oval="true"
-                        tools:src="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/followers_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:textFontWeight="600"
-                        android:textSize="20sp"
-                        app:textNumberWithK="@{profile.followersCount}"
-                        app:layout_constraintBottom_toTopOf="@+id/followers_label"
-                        app:layout_constraintEnd_toEndOf="@+id/followers_label"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/followers_label"
-                        app:layout_constraintTop_toTopOf="@+id/user_image"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        tools:text="22.1k" />
-
-                    <TextView
-                        android:id="@+id/followers_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
-                        android:text="@string/followers"
-                        android:textColor="@color/textSecondary"
-                        android:textFontWeight="500"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/user_image"
-                        app:layout_constraintEnd_toStartOf="@+id/user_image"
-                        app:layout_constraintTop_toBottomOf="@+id/followers_text" />
-
-                    <TextView
-                        android:id="@+id/following_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:textFontWeight="600"
-                        android:textSize="20sp"
-                        app:textNumberWithK="@{profile.followingCount}"
-                        app:layout_constraintBottom_toTopOf="@+id/following_label"
-                        app:layout_constraintEnd_toEndOf="@+id/following_label"
-                        app:layout_constraintStart_toStartOf="@+id/following_label"
-                        app:layout_constraintTop_toTopOf="@+id/user_image"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        tools:text="863" />
-
-                    <TextView
-                        android:id="@+id/following_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="@string/following"
-                        android:textColor="@color/textSecondary"
-                        android:textFontWeight="500"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/user_image"
-                        app:layout_constraintStart_toEndOf="@+id/user_image"
-                        app:layout_constraintTop_toBottomOf="@+id/following_text" />
-
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_common"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="@dimen/spacing_common"
-                        android:gravity="center"
-                        android:text="@{profile.name}"
-                        android:textAlignment="gravity"
-                        android:textColor="@android:color/black"
-                        android:textFontWeight="600"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/user_image"
-                        tools:text="Juliana Doe dos Santos Soares" />
-
-                    <TextView
-                        android:id="@+id/user_biography"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_common"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="@dimen/spacing_common"
-                        android:gravity="center"
-                        android:text="@{profile.biography}"
-                        android:textAlignment="gravity"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp"
-                        app:goneIf="@{profile.biography == null}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/user_name"
-                        tools:text=":) Isso é uma descrição completa do perfil.\n⬆️ O número máximo de caracteres são 150, incluíndo emojis\n⏳Estou testando o espaço máximo no layout ..!" />
-
-                    <androidx.constraintlayout.widget.Barrier
-                        android:id="@+id/barrier_profile_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="user_biography"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_total_posts"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="@dimen/spacing_common"
-                        android:layout_marginTop="@dimen/spacing_common"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toStartOf="@id/card_like_mean"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/barrier_profile_content"
-                        app:strokeColor="@color/card_stroke_profile"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:textNumber="@{profile.postCount}"
-                                android:textColor="@android:color/black"
-                                android:textFontWeight="600"
-                                android:textSize="18sp"
-                                tools:text="242" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/instagram_post_amount"
-                                android:textColor="@color/textSecondary"
-                                android:textFontWeight="500"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_like_mean"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginTop="@dimen/spacing_common"
-                        android:layout_marginEnd="@dimen/spacing_common"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/card_total_posts"
-                        app:layout_constraintTop_toBottomOf="@id/barrier_profile_content"
-                        app:strokeColor="@color/card_stroke_profile"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/black"
-                                app:textNumberWithK="@{profile.meanLikes}"
-                                android:textFontWeight="600"
-                                android:textSize="18sp"
-                                tools:text="945" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/instagram_mean_like"
-                                android:textColor="@color/textSecondary"
-                                android:textFontWeight="500"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <androidx.constraintlayout.widget.Barrier
-                        android:id="@+id/barrier_card_amount_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="card_like_mean,card_total_posts"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_medias"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:clipToPadding="false"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="6dp"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/barrier_card_amount_content"
-                        tools:listitem="@layout/item_profile_home_media"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/item_profile_home_media"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

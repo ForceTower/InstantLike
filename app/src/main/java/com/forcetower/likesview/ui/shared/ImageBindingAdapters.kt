@@ -11,17 +11,19 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.forcetower.likesview.GlideApp
+import com.squareup.picasso.Picasso
 
 @BindingAdapter(value = ["imageUri", "placeholder", "clipCircle", "listener"], requireAll = false)
 fun imageUri(imageView: ImageView, imageUri: Uri?, placeholder: Drawable?, clipCircle: Boolean?, listener: ImageLoadListener?) {
     val circular = clipCircle ?: false
     var request = when (imageUri) {
         null -> {
-            Glide.with(imageView)
+            GlideApp.with(imageView)
                 .load(placeholder)
         }
         else -> {
-            Glide.with(imageView)
+            GlideApp.with(imageView)
                 .load(imageUri)
                 .apply(RequestOptions().placeholder(placeholder))
         }
@@ -61,7 +63,7 @@ fun imageUri(imageView: ImageView, imageUri: Uri?, placeholder: Drawable?, clipC
 
 @BindingAdapter(value = ["imageUrl", "placeholder", "clipCircle", "listener"], requireAll = false)
 fun imageUrl(imageView: ImageView, imageUrl: String?, placeholder: Drawable?, clipCircle: Boolean?, listener: ImageLoadListener?) {
-    imageUri(imageView, imageUrl?.toUri(), placeholder, clipCircle, listener)
+    GlideApp.with(imageView).load(imageUrl).into(imageView)
 }
 
 interface ImageLoadListener {

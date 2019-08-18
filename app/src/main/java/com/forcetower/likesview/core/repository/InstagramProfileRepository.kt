@@ -3,8 +3,6 @@ package com.forcetower.likesview.core.repository
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.room.withTransaction
@@ -14,6 +12,8 @@ import com.forcetower.likesview.core.model.values.InstagramProfile
 import com.forcetower.likesview.core.service.InstagramAPI
 import timber.log.Timber
 import java.util.Calendar
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,8 +76,8 @@ class InstagramProfileRepository @Inject constructor(
         return database.instagramMedia().getMediasOfProfile(username)
     }
 
-    fun getSelectedProfileMedias(): LiveData<PagedList<InstagramMedia>> {
-        return database.instagramMedia().getMediasSourceOfSelectedProfile().toLiveData(pageSize = 12)
+    fun getSelectedProfileMedias(): LiveData<List<InstagramMedia>> {
+        return database.instagramMedia().getMediasOfSelectedProfile()
     }
 
     suspend fun setSelectedProfile(username: String) {
@@ -89,9 +89,9 @@ class InstagramProfileRepository @Inject constructor(
         val boundary = ProfilePicturesBoundaryCallback(database, service, deviceWidth)
 
         return database.instagramMedia().getMediasSourceOfSelectedProfile().toLiveData(
-            pageSize = 12,
+            pageSize = 20,
             initialLoadKey = null,
-            boundaryCallback = boundary
+            fetchExecutor = Executors.newSingleThreadExecutor()
         )
     }
 }

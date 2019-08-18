@@ -1,10 +1,11 @@
 package com.forcetower.likesview.ui.addprofile
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -47,23 +48,26 @@ class AddProfileFragment : DaggerFragment(), KeyboardVisibilityEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.etSearch.addTextChangedListener(
-            beforeTextChanged = { _, _, _, _ ->
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.btnAddProfile.isEnabled = false
-            },
-            onTextChanged = { text, _, _, _ ->
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val username = text?.toString()?.trim() ?: ""
                 if (!username.startsWith("@")) {
                     val fixed = "@$username"
                     binding.etSearch.setText(fixed)
                     binding.etSearch.setSelection(fixed.length)
                 }
-            },
-            afterTextChanged = { text ->
+            }
+
+            override fun afterTextChanged(text: Editable?) {
                 val username = (text?.toString() ?: "").replace("@", "")
                 viewModel.searchUsers(username)
             }
-        )
+
+        })
 
         viewModel.userSearch.observe(this, Observer {
             adapter.submitList(it)

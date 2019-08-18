@@ -29,7 +29,7 @@ data class InstagramMedia (
     val likes: Int,
     val takenAt: Long,
     val caption: String?,
-    val preview: String?,
+//    val preview: String?,
     val isVideo: Boolean,
     val accessibilityCaption: String?,
     val thumbnailSrc: String?,
@@ -42,6 +42,8 @@ data class InstagramMedia (
     val pictureUrlSmall = thumbnailSrc ?: displayUrl
     @Ignore
     val isGallery = type == "GraphSidecar"
+    @Ignore
+    var profile: InstagramProfile? = null
 
     companion object {
         fun getMediaListFromProfileFetch(fetchResult: ProfileFetchResult, desiredWidth: Int, nextPage: String?): List<InstagramMedia> {
@@ -61,7 +63,7 @@ data class InstagramMedia (
                 node.likedEdge?.count ?: 0,
                 node.takenAt,
                 node.captionEdge?.edges?.firstOrNull { it.node.text != null }?.node?.text,
-                node.mediaPreview,
+//                node.mediaPreview,
                 node.video,
                 node.accessibilityCaption,
                 findBestThumbnailForDevice(node, desiredWidth),

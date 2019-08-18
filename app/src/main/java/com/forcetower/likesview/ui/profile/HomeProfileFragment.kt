@@ -9,6 +9,7 @@ import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.forcetower.likesview.core.DistinctObserver
@@ -16,6 +17,7 @@ import com.forcetower.likesview.core.extensions.doOnApplyWindowInsets
 import com.forcetower.likesview.core.vm.ViewModelFactory
 import com.forcetower.likesview.databinding.FragmentHomeProfileBinding
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeProfileFragment : DaggerFragment() {
@@ -36,7 +38,16 @@ class HomeProfileFragment : DaggerFragment() {
         reelsAdapter = ReelsMediaAdapter(viewModel)
         return FragmentHomeProfileBinding.inflate(inflater, container, false).also {
             binding = it
-            binding.recyclerMedias.adapter = mediaAdapter
+            binding.recyclerMedias.apply {
+                adapter = mediaAdapter
+                setHasFixedSize(true)
+                setItemViewCacheSize(20)
+                (layoutManager as? GridLayoutManager)?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if (position == 0) 3 else 1
+                    }
+                }
+            }
             binding.recyclerReels.adapter = reelsAdapter
         }.root
     }
@@ -48,13 +59,17 @@ class HomeProfileFragment : DaggerFragment() {
             v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
         }
 
-        viewModel.getSelectedProfile().observe(this, DistinctObserver {
+        viewModel.getSelectedProfile().observe(this, Observer {
+            Timber.d("Profile ${it?.username}")
             binding.profile = it
+            mediaAdapter.profile = it
         })
-        viewModel.getSelectedProfileMedias().observe(this, Observer {
-            if (it.isNotEmpty()) mediaAdapter.submitList(it)
+        viewModel.getSelectedProfileMediaSource().observe(this, Observer { list ->
+            Timber.d("Sized ${list.size}")
+            mediaAdapter.submitList(list)
         })
-        viewModel.getProfiles().observe(this, DistinctObserver {
+        viewModel.getProfiles().observe(this, Observer {
+            Timber.d("Reels ${it.size}")
             reelsAdapter.submitList(it)
         })
     }

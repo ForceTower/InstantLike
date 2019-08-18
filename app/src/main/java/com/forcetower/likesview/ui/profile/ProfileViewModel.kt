@@ -1,9 +1,9 @@
 package com.forcetower.likesview.ui.profile
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.forcetower.likesview.core.Event
@@ -21,18 +21,25 @@ class ProfileViewModel @Inject constructor(
     fun getProfiles() = repository.getAvailableProfiles()
 
     fun getProfile(username: String): LiveData<InstagramProfile> {
-        return liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emitSource(repository.getProfile(username))
+        val data = MediatorLiveData<InstagramProfile>()
+        viewModelScope.launch {
+            val source = repository.getProfile(username)
+            data.addSource(source) {
+                data.value = it
+            }
         }
+        return data
     }
 
     fun getMedias(username: String): LiveData<List<InstagramMedia>> {
         return repository.getMedias(username)
     }
 
-    fun getSelectedProfileMedias(): LiveData<PagedList<InstagramMedia>> {
+    fun getSelectedProfileMedias(): LiveData<List<InstagramMedia>> {
         return repository.getSelectedProfileMedias()
     }
+
+    fun getSelectedProfileMediaSource() = repository.getSelectedProfileMediaSource()
 
     fun getSelectedProfile() = repository.getSelectedProfile()
 
