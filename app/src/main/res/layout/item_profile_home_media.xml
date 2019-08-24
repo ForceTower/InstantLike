@@ -17,8 +17,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
-        android:layout_margin="2dp"
-        android:onClick="@{() -> actions.onMediaClicked(media)}">
+        android:layout_margin="2dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
