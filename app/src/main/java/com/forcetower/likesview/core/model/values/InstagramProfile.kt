@@ -1,13 +1,12 @@
 package com.forcetower.likesview.core.model.values
 
-import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.forcetower.likesview.core.model.transfer.InstagramUserSearch
 import com.forcetower.likesview.core.model.transfer.ProfileFetchResult
-import java.util.Calendar
+import java.util.*
 
 @Entity(indices = [
     Index(value = ["username"], unique = true)

@@ -51,18 +51,22 @@ class ProfilePicturesBoundaryCallback(
     }
 
     private fun requestPage(id: Long, maxId: String? = null) {
-        val pageCall = service.getProfilePage(createQueryMap(id, maxId = maxId))
-        val page = pageCall.execute().body()!!
-        val user = page.data?.user ?: page.graph?.user
-        val pageInfo = user?.edgeMedia?.pageInfo
-        val nextPage = pageInfo?.endCursor
-        val hasNextPage = pageInfo?.hasNextPage ?: false
-        database.instagramProfiles().updateNextPage(id, nextPage, hasNextPage)
-        val medias = InstagramMedia.getMediaListFromProfileFetch(page, desiredWidth, nextPage)
-        Timber.d("New medias ${medias.size}")
-        database.instagramMedia().insertNonBlock(medias)
-        Timber.d("Completed zero items")
-        userId = id
+        try {
+            val pageCall = service.getProfilePage(createQueryMap(id, maxId = maxId))
+            val page = pageCall.execute().body()!!
+            val user = page.data?.user ?: page.graph?.user
+            val pageInfo = user?.edgeMedia?.pageInfo
+            val nextPage = pageInfo?.endCursor
+            val hasNextPage = pageInfo?.hasNextPage ?: false
+            database.instagramProfiles().updateNextPage(id, nextPage, hasNextPage)
+            val medias = InstagramMedia.getMediaListFromProfileFetch(page, desiredWidth, nextPage)
+            Timber.d("New medias ${medias.size}")
+            database.instagramMedia().insertNonBlock(medias)
+            Timber.d("Completed zero items")
+            userId = id
+        } catch (error: Throwable) {
+
+        }
     }
 
     private fun createQueryMap(

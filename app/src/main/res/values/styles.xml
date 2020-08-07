@@ -32,7 +32,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="windowActionBarOverlay">true</item>s
+        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="LikesView.FirstProfile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
